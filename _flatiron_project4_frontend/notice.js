@@ -11,7 +11,7 @@ class Notice {
   }
 
   // display each notice
-  static displayNotice(notice, i) {
+  static displayNotice(notice) {
     // set icon by category
     let icon
     if (notice.category === "Today's Works") {
@@ -26,16 +26,17 @@ class Notice {
     // create card html
     const card = `
     <div id="n_${notice.id}" class="accordion-item">
-    <h2 class="accordion-header" id="notice_${notice.id}">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_${notice.id}" aria-expanded="false" aria-controls="collapse_${notice.id}">
-        ${icon} <span class="notice-title">${notice.title}</span>
-      </button>
-    </h2>
-    <div id="collapse_${notice.id}" class="accordion-collapse collapse" aria-labelledby="heading_${notice.id}" data-bs-parent="#board">
-      <div class="accordion-body">
-        <div>${notice.description}<div>
-        <div id="edit-form-${notice.id}" class="off">
-        <div class="comments"></div>
+      <h2 class="accordion-header" id="notice_${notice.id}">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_${notice.id}" aria-expanded="false" aria-controls="collapse_${notice.id}">
+          ${icon} <span class="notice-title">${notice.title}</span>
+        </button>
+      </h2>
+      <div id="collapse_${notice.id}" class="accordion-collapse collapse" aria-labelledby="heading_${notice.id}" data-bs-parent="#board">
+        <div class="accordion-body">
+          <div>${notice.description}</div>
+          <div id="edit-form-${notice.id}" class="off"></div>
+          <div class="comments"></div>
+        </div>
       </div>
     </div>
     `
@@ -49,13 +50,7 @@ class Notice {
           }
         })
     }
-    // append card to display
-    board.innerHTML += card
-    // set open if first card
-    if (i === 0) {
-      document.querySelector("h2 button").classList.remove("collapsed")
-      document.querySelector(`#collapse_${notice.id}`).classList.add("show")
-    }
+    return card
   }
 
   // get all notices from backend and display them
@@ -71,7 +66,11 @@ class Notice {
         let notices = data.map(d => new Notice(d))
         // make them into cards html 
         notices.forEach((notice, i) => {
-          Notice.displayNotice(notice, i)
+          board.innerHTML += Notice.displayNotice(notice)
+          if (i === 0) {
+            document.querySelector("h2 button").classList.remove("collapsed")
+            document.querySelector(`#collapse_${notice.id}`).classList.add("show")
+          }
         })
       })
   }
@@ -146,10 +145,15 @@ class Notice {
       })
     })
       .then(res => res.json())
-      .then(data => {
-        console.log(data)
-        messageDisplay(`"${(data.title.length < 25) ? data.title : `${data.title.slice(0, 25)}...`}" successfully updated!`)
-        Notice.getNotices()
+      .then(notice => {
+        console.log(notice)
+        messageDisplay(`"${(notice.title.length < 25) ? notice.title : `${notice.title.slice(0, 25)}...`}" successfully updated!`)
+        // document.querySelector(`#n_${notice.id}`).remove()
+        // console.log(board.innerHTML)
+        // console.log(Notice.displayNotice(notice))
+        board.innerHTML = board.innerHTML + Notice.displayNotice(notice)
+        // document.querySelector("h2 button").classList.remove("collapsed")
+        // document.querySelector(`#collapse_${notice.id}`).classList.add("show")
       })
   }
 
