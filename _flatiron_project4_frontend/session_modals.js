@@ -82,11 +82,8 @@ logoutLink.addEventListener("click", e => {
 
 //// session related functions
 // toggle navbar items and control message display
-function modalToggle(m, username = "USER") {
-  message.innerHTML = m
-  setTimeout(() => {
-    message.innerHTML = ""
-  }, 5000)
+function modalToggle(message, username = "USER") {
+  messageDisplay(message)
   
   profileLink.children[0].innerHTML = `Hi, ${username}!`
   signupLink.classList.toggle("off")
@@ -109,10 +106,7 @@ function sessionSubmit(route, form, status) {
       form.classList.toggle("off")
       form.children[2][0].value = ""
       form.children[2][1].value = ""
-      message.innerHTML = user.message
-      setTimeout(() => {
-        message.innerHTML = ""
-      }, 5000)
+      messageDisplay(user.message)
     } else {
       let message = `Successfully ${status} as ${user.username}!`
       modalToggle(message, user.username)
@@ -126,6 +120,13 @@ function sessionSubmit(route, form, status) {
       Notice.displayNewForm()
     }
   })
+}
+
+function messageDisplay(msg) {
+  message.innerHTML = msg
+  setTimeout(() => {
+    message.innerHTML = ""
+  }, 5000)
 }
 
 //// helper functions

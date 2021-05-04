@@ -10,7 +10,8 @@ class Notice {
     this.user_id = notice.user_id
   }
 
-  static getNotice(notice, i) {
+  // display each notice
+  static displayNotice(notice, i) {
     // set icon by category
     let icon
     if (notice.category === "Today's Works") {
@@ -38,6 +39,7 @@ class Notice {
       </div>
     </div>
     `
+    // add edit & delete button when owned
     let token = currentUser()
     if (!!token) {
       axios.post(`${url}/sessions/token`, { token: token })
@@ -47,11 +49,9 @@ class Notice {
           }
         })
     }
-
     // append card to display
     board.innerHTML += card
-
-    // set the first card to open
+    // set open if first card
     if (i === 0) {
       document.querySelector("h2 button").classList.remove("collapsed")
       document.querySelector(`#collapse_${notice.id}`).classList.add("show")
@@ -71,7 +71,7 @@ class Notice {
         let notices = data.map(d => new Notice(d))
         // make them into cards html 
         notices.forEach((notice, i) => {
-          Notice.getNotice(notice, i)
+          Notice.displayNotice(notice, i)
         })
       })
   }
@@ -128,10 +128,7 @@ class Notice {
       .then(res => {
         document.querySelector(`#n_${notice.id}`).remove()
         console.log(res.data)
-        message.innerHTML = res.data.message
-        setTimeout(() => {
-          message.innerHTML = ""
-        }, 5000)
+        messageDisplay(res.data.message)
       })
   }
 
@@ -151,10 +148,7 @@ class Notice {
       .then(res => res.json())
       .then(data => {
         console.log(data)
-        message.innerHTML = `"${(data.title.length < 25) ? data.title : `${data.title.slice(0, 25)}...`}" successfully updated!`
-        setTimeout(() => {
-          message.innerHTML = ""
-        }, 5000)
+        messageDisplay(`"${(data.title.length < 25) ? data.title : `${data.title.slice(0, 25)}...`}" successfully updated!`)
         Notice.getNotices()
       })
   }
@@ -203,10 +197,7 @@ class Notice {
         })
       }).then(res => res.json())
         .then(data => {
-          message.innerHTML = `"${(data.title.length < 25) ? data.title : `${data.title.slice(0, 25)}...`}" created successfully`
-          setTimeout(() => {
-            message.innerHTML = ""
-          }, 5000)
+          messageDisplay(`"${(data.title.length < 25) ? data.title : `${data.title.slice(0, 25)}...`}" created successfully`)
           newPostForm.children[2].value = ""
           newPostForm.children[6].value = ""
           newPostForm.children[9].value = "etc"

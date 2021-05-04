@@ -34,7 +34,7 @@ class NoticesController < ApplicationController
     notice = Notice.find_by(id: params[:id])
     title = notice.title
     if notice.destroy
-      render json: {message: "'#{title}' successfully deleted!"}
+      render json: {message: "'#{title.length > 25 ? title.slice(0, 25) : title}' successfully deleted!"}
     else
       render json: {message: "Deletion failed..."}
     end
