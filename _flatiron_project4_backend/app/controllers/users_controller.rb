@@ -1,21 +1,24 @@
 class UsersController < ApplicationController
   def index
     users = User.all
-    render json: users
+    render json: users, include: [:notices]
   end
 
   def show
-    binding.pry
-    user = User.find_by(id: params[id])
+    user = User.find_by(id: params[:id])
     render json: user
   end
 
   def create
-    user = User.create(user_params)
-    session[:user_id] = user.id
-    p session[:user_id]
-    render json: user
-    binding.pry
+    user = User.new(user_params)
+    user.email = params[:user][:email].downcase
+    if user.save
+      session[:user_id] = user.id
+      p session[:user_id]
+      render json: user
+    else
+      render json: {message: "Sign up failed..."}
+    end
   end
 
   def user_params
