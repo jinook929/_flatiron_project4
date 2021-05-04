@@ -11,42 +11,79 @@ class Notice {
   }
 
   // display each notice
-  static displayNotice(notice) {
+  // static displayNotice(notice) {
+  displayNotice() {
     // set icon by category
     let icon
-    if (notice.category === "Today's Works") {
+    if (this.category === "Today's Works") {
       icon = `<i class="fas fa-calendar-day category-icon"></i>`
-    } else if (notice.category === "Meetings") {
+    } else if (this.category === "Meetings") {
       icon = `<i class="fas fa-users category-icon"></i>`
-    } else if (notice.category === "Tips") {
+    } else if (this.category === "Tips") {
       icon = `<i class="far fa-lightbulb category-icon"></i>`
     } else {
       icon = `<i class="fab fa-rocketchat category-icon"></i>`
     }
     // create card html
     const card = `
-    <div id="n_${notice.id}" class="accordion-item">
-      <h2 class="accordion-header" id="notice_${notice.id}">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_${notice.id}" aria-expanded="false" aria-controls="collapse_${notice.id}">
-          ${icon} <span class="notice-title">${notice.title}</span>
+    <div id="n_${this.id}" class="accordion-item">
+      <h2 class="accordion-header" id="notice_${this.id}">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_${this.id}" aria-expanded="false" aria-controls="collapse_${this.id}">
+          ${icon} <span class="notice-title">${this.title}</span>
         </button>
       </h2>
-      <div id="collapse_${notice.id}" class="accordion-collapse collapse" aria-labelledby="heading_${notice.id}" data-bs-parent="#board">
+      <div id="collapse_${this.id}" class="accordion-collapse collapse" aria-labelledby="heading_${this.id}" data-bs-parent="#board">
         <div class="accordion-body">
-          <div>${notice.description}</div>
-          <div id="edit-form-${notice.id}" class="off"></div>
+          <div class="d-flex gap-1 mt-3 me-3">
+            <button id="editBtn_${this.id}" class="off btn btn-warning btn-sm ms-auto">Edit</button>
+            <button id="deleteBtn_${this.id}" class="off btn btn-danger btn-sm">Delete</button>
+          </div>
+          <div>${this.description}</div>
+          <div id="edit-form-${this.id}" class="off"></div>
           <div class="comments"></div>
         </div>
       </div>
     </div>
     `
+    // let icon
+    // if (notice.category === "Today's Works") {
+    //   icon = `<i class="fas fa-calendar-day category-icon"></i>`
+    // } else if (notice.category === "Meetings") {
+    //   icon = `<i class="fas fa-users category-icon"></i>`
+    // } else if (notice.category === "Tips") {
+    //   icon = `<i class="far fa-lightbulb category-icon"></i>`
+    // } else {
+    //   icon = `<i class="fab fa-rocketchat category-icon"></i>`
+    // }
+    // // create card html
+    // const card = `
+    // <div id="n_${notice.id}" class="accordion-item">
+    //   <h2 class="accordion-header" id="notice_${notice.id}">
+    //     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_${notice.id}" aria-expanded="false" aria-controls="collapse_${notice.id}">
+    //       ${icon} <span class="notice-title">${notice.title}</span>
+    //     </button>
+    //   </h2>
+    //   <div id="collapse_${notice.id}" class="accordion-collapse collapse" aria-labelledby="heading_${notice.id}" data-bs-parent="#board">
+    //     <div class="accordion-body">
+    //       <div class="d-flex gap-1 mt-3 me-3">
+    //         <button id="editBtn_${notice.id}" class="off btn btn-warning btn-sm ms-auto">Edit</button>
+    //         <button id="deleteBtn_${notice.id}" class="off btn btn-danger btn-sm">Delete</button>
+    //       </div>
+    //       <div>${notice.description}</div>
+    //       <div id="edit-form-${notice.id}" class="off"></div>
+    //       <div class="comments"></div>
+    //     </div>
+    //   </div>
+    // </div>
+    // `
+
     // add edit & delete button when owned
     let token = currentUser()
     if (!!token) {
       axios.post(`${url}/sessions/token`, { token: token })
         .then(res => {
-          if (notice.user_id === res.data.id) {
-            Notice.addEditDeleteBtn(notice)
+          if (this.user_id === res.data.id) {
+            Notice.addEditDeleteBtn(this)
           }
         })
     }
@@ -66,7 +103,8 @@ class Notice {
         let notices = data.map(d => new Notice(d))
         // make them into cards html 
         notices.forEach((notice, i) => {
-          board.innerHTML += Notice.displayNotice(notice)
+          board.innerHTML += notice.displayNotice()
+          // board.innerHTML += Notice.displayNotice(notice)
           if (i === 0) {
             document.querySelector("h2 button").classList.remove("collapsed")
             document.querySelector(`#collapse_${notice.id}`).classList.add("show")
@@ -76,19 +114,11 @@ class Notice {
   }
 
   static addEditDeleteBtn(notice) {
-    const descriptionBody = document.querySelector(`#collapse_${notice.id}`)
-    const flexDiv = document.createElement("div")
-    const editBtn = document.createElement("button")
-    const deleteBtn = document.createElement("button")
+    const editBtn = document.querySelector(`#editBtn_${notice.id}`)
+    const deleteBtn = document.querySelector(`#deleteBtn_${notice.id}`)
     const editForm = document.querySelector(`#edit-form-${notice.id}`)
-    flexDiv.className = "d-flex gap-1 mt-3 me-3"
-    editBtn.innerHTML = "Edit"
-    editBtn.classList.add("btn", "btn-warning", "btn-sm", "ms-auto")
-    deleteBtn.innerHTML = "Delete"
-    deleteBtn.classList.add("btn", "btn-danger", "btn-sm")
-    flexDiv.append(editBtn)
-    flexDiv.append(deleteBtn)
-    descriptionBody.prepend(flexDiv)
+    editBtn.classList.toggle("off")
+    deleteBtn.classList.toggle("off")
     editForm.innerHTML = `
       <form id="edit-post-form-${notice.id}" class="edit-post-form">
         <label class="new-form-label" for="title">TITLE</label><br>
@@ -123,6 +153,7 @@ class Notice {
   }
 
   static deleteNotice(notice) {
+    debugger
     axios.delete(`${url}/notices/${notice.id}`)
       .then(res => {
         document.querySelector(`#n_${notice.id}`).remove()
@@ -148,12 +179,13 @@ class Notice {
       .then(notice => {
         console.log(notice)
         messageDisplay(`"${(notice.title.length < 25) ? notice.title : `${notice.title.slice(0, 25)}...`}" successfully updated!`)
+
         // document.querySelector(`#n_${notice.id}`).remove()
-        // console.log(board.innerHTML)
-        // console.log(Notice.displayNotice(notice))
-        board.innerHTML = board.innerHTML + Notice.displayNotice(notice)
-        // document.querySelector("h2 button").classList.remove("collapsed")
+        // board.innerHTML = Notice.displayNotice(notice) + board.innerHTML
+        // document.querySelector(`#n_${notice.id} button`).classList.remove("collapsed")
         // document.querySelector(`#collapse_${notice.id}`).classList.add("show")
+
+        Notice.getNotices()
       })
   }
 
