@@ -45,37 +45,6 @@ class Notice {
       </div>
     </div>
     `
-    // let icon
-    // if (notice.category === "Today's Works") {
-    //   icon = `<i class="fas fa-calendar-day category-icon"></i>`
-    // } else if (notice.category === "Meetings") {
-    //   icon = `<i class="fas fa-users category-icon"></i>`
-    // } else if (notice.category === "Tips") {
-    //   icon = `<i class="far fa-lightbulb category-icon"></i>`
-    // } else {
-    //   icon = `<i class="fab fa-rocketchat category-icon"></i>`
-    // }
-    // // create card html
-    // const card = `
-    // <div id="n_${notice.id}" class="accordion-item">
-    //   <h2 class="accordion-header" id="notice_${notice.id}">
-    //     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_${notice.id}" aria-expanded="false" aria-controls="collapse_${notice.id}">
-    //       ${icon} <span class="notice-title">${notice.title}</span>
-    //     </button>
-    //   </h2>
-    //   <div id="collapse_${notice.id}" class="accordion-collapse collapse" aria-labelledby="heading_${notice.id}" data-bs-parent="#board">
-    //     <div class="accordion-body">
-    //       <div class="d-flex gap-1 mt-3 me-3">
-    //         <button id="editBtn_${notice.id}" class="off btn btn-warning btn-sm ms-auto">Edit</button>
-    //         <button id="deleteBtn_${notice.id}" class="off btn btn-danger btn-sm">Delete</button>
-    //       </div>
-    //       <div>${notice.description}</div>
-    //       <div id="edit-form-${notice.id}" class="off"></div>
-    //       <div class="comments"></div>
-    //     </div>
-    //   </div>
-    // </div>
-    // `
 
     // add edit & delete button when owned
     let token = currentUser()
@@ -148,15 +117,14 @@ class Notice {
     })
     deleteBtn.addEventListener("click", e => {
       console.log("Delete???")
-      Notice.deleteNotice(notice)
+      notice.deleteNotice()
     })
   }
 
-  static deleteNotice(notice) {
-    debugger
-    axios.delete(`${url}/notices/${notice.id}`)
+  deleteNotice() {
+    axios.delete(`${url}/notices/${this.id}`)
       .then(res => {
-        document.querySelector(`#n_${notice.id}`).remove()
+        document.querySelector(`#n_${this.id}`).remove()
         console.log(res.data)
         messageDisplay(res.data.message)
       })
