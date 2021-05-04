@@ -113,7 +113,7 @@ class Notice {
     editForm.addEventListener("submit", e => {
       e.preventDefault()
       console.log("submit!!!")
-      Notice.editNotice(notice)
+      notice.editNotice()
     })
     deleteBtn.addEventListener("click", e => {
       console.log("Delete???")
@@ -130,9 +130,9 @@ class Notice {
       })
   }
 
-  static editNotice(notice) {
-    let editPostForm = document.querySelector(`#edit-post-form-${notice.id}`)
-    fetch(`${url}/notices/${notice.id}`, {
+  editNotice() {
+    let editPostForm = document.querySelector(`#edit-post-form-${this.id}`)
+    fetch(`${url}/notices/${this.id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
