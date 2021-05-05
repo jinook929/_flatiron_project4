@@ -1,5 +1,7 @@
 const navbarBrand = document.querySelector(".navbar-brand")
+const profileLink = document.querySelector("#profile")
 const howtoBox = document.querySelector("#howto-box")
+const search = document.querySelector("#search")
 const welcome = document.querySelector("#welcome")
 const message = document.querySelector("#message")
 const newNotice = document.querySelector("#new-notice")
@@ -27,5 +29,53 @@ navbarBrand.addEventListener("click", e => {
   const howtoClose = document.querySelector("#howto-close")
   howtoClose.addEventListener("click", e => {
     howtoBox.classList.toggle("off")
+  })
+})
+
+// profile Easter Egg
+profileLink.addEventListener("click", e => {
+  let hi = document.querySelector("#hi")
+  if(!hi) {
+    hi = document.createElement("img")
+    hi.id = "hi"
+    hi.setAttribute("src", "./images/hi.png")
+    document.body.prepend(hi)
+  } else {
+    hi.remove()
+  }
+})
+
+// search function
+search.addEventListener("submit", e => {
+  e.preventDefault()
+  axios.post(`${url}/notices/search`, {keyword: search.children[0].value.toLowerCase()})
+  .then(res => {
+    // convert backend data to JS objects
+    let notices = res.data.map(d => new Notice(d))
+    // append card nodes into board 
+    board.innerHTML = ""
+    if(notices.length === 0) {
+      const noResultMsg = document.createElement("h2")
+      noResultMsg.id = "no-result"
+      noResultMsg.innerHTML = `There is no result for "${search.children[0].value}"`
+      board.append(noResultMsg)
+    } else {
+      notices.forEach((notice, i) => {
+        board.append(notice.displayNotice())
+        if (i === 0) {
+          document.querySelector(`#n_${notice.id} button`).classList.remove("collapsed")
+          document.querySelector(`#collapse_${notice.id}`).classList.add("show")
+        }
+      })
+    }
+    search.children[0].value = ""
+    const backBtn = document.createElement("button")
+    backBtn.id = "back-btn"
+    backBtn.className = "btn btn-primary btn-lg"
+    backBtn.innerHTML = "Back to Main"
+    backBtn.addEventListener("click", e => {
+      Notice.getNotices()
+    })
+    board.append(backBtn)
   })
 })

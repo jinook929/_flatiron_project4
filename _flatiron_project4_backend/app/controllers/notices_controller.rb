@@ -4,10 +4,14 @@ class NoticesController < ApplicationController
     render json: notices, include: [:user]
   end
 
-  def show
-    notice = Notice.find_by(id: params[:id])
-    render json: notice
-  end
+  # def show
+  #   notice = Notice.find_by(id: params[:id])
+  #   if(notice)
+  #     render json: notice
+  #   else
+  #     render json: {message: "Notice not found..."}
+  #   end
+  # end
 
   def create
     user = User.find_by(password_digest: params[:notice][:user_digest])
@@ -23,7 +27,9 @@ class NoticesController < ApplicationController
 
   def update
     notice = Notice.find_by(id: params[:id])
-    if notice.update(title: params[:notice][:title], description: params[:notice][:description], category: params[:notice][:category])
+    if notice[:title] == params[:notice][:title] && notice[:description] == params[:notice][:description] && notice[:category] == params[:notice][:category]
+      render json: {message: "No change detected..."}
+    elsif notice.update(title: params[:notice][:title], description: params[:notice][:description], category: params[:notice][:category])
       render json: notice
     else
       render json: {message: "Update failed..."}
@@ -40,7 +46,12 @@ class NoticesController < ApplicationController
     end
   end
 
+  def search
+    notices = Notice.where("lower(title) LIKE ?", "%#{params[:keyword]}%").or(Notice.where("lower(description) LIKE ?", "%#{params[:keyword]}%"))
+    render json: notices.uniq
+  end
+
   # def notice_params
-  #   params.require(:notice).permit(:title, :description)
+  #   params.require(:notice).permit(:title, :description, :category, :user_digest)
   # end
 end

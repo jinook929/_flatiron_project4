@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
+  resources :comments
   resources :notices
+  post 'notices/search', to: 'notices#search'
   post 'sessions', to: 'sessions#create'
   delete 'sessions', to: 'sessions#destroy'
   post 'sessions/token', to: 'sessions#identify'

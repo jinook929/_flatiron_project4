@@ -1,7 +1,6 @@
 // navbar elements
 const signupLink = document.querySelector("#signup")
 const loginLink = document.querySelector("#login")
-const profileLink = document.querySelector("#profile")
 const logoutLink = document.querySelector("#logout")
 // session modals elements
 const labels = document.querySelectorAll('.form-input label')
@@ -83,7 +82,7 @@ logoutLink.addEventListener("click", e => {
 //// session related functions
 // toggle navbar items and control message display
 function modalToggle(message, username = "USER") {
-  messageDisplay(message)
+  displayMessage(message)
   
   profileLink.children[0].innerHTML = `Hi, ${username}!`
   signupLink.classList.toggle("off")
@@ -106,7 +105,7 @@ function sessionSubmit(route, form, status) {
       form.classList.toggle("off")
       form.children[2][0].value = ""
       form.children[2][1].value = ""
-      messageDisplay(user.message)
+      displayMessage(user.message)
     } else {
       let message = `Successfully ${status} as ${user.username}!`
       modalToggle(message, user.username)
@@ -121,8 +120,8 @@ function sessionSubmit(route, form, status) {
     }
   })
 }
-
-function messageDisplay(msg) {
+// 
+function displayMessage(msg) {
   message.innerHTML = msg
   setTimeout(() => {
     message.innerHTML = ""
