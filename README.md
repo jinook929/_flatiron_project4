@@ -13,15 +13,15 @@ by Jinook Jung
 2. Enter into the *_flatiron_project4/_flatiron_project4_backend* folder: `cd _flatiron_project4/_flatiron_project4_backend`.
 3. Execute `bundle install` and run `rails s` in terminal.
 4. Then, change directory to *_flatiron_project4/_flatiron_project4_frontend* folder: `cd ..` & `cd _flatiron_project4/_flatiron_project4_frontend`
-5. Open the `index.html` in your browser (please avoid usring live server).
+5. Open the `index.html` in your browser (*please avoid usring live server*).
 
 ## How To Use the App
 
 1. You can either sign up for your own account or use the existing accounts to log in. (4 users are pre-set: `ann@email.com`, `lurk@email.com`, `eve@email.com`, `abc@email.com` [password for everyone is `123`])
 2. Before logging in, user can see all the notices.
-3. Each notice has its category
+3. Each notice has its category (please refer to the keys).
 4. After logging in, you can create new notices(/comments), and edit or delete your own notices(/comments).
-5. Keyword search is available for any logged-in user via the search box on the navbar.
+5. Keyword search is available for any user via the search box on the navbar.
 6. There are a couple of Easter Eggs, so try to find them~^^√
 
 ## Screen Captures
@@ -111,7 +111,7 @@ by Jinook Jung
 
 ``` ruby
   belongs_to :user
-  has_many :comments
+  has_many :comments, dependent: :destroy
 
   validates_presence_of :title, :description, :category, :user_id
 ```
