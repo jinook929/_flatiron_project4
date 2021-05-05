@@ -8,6 +8,7 @@ class Notice {
     this.description = notice.description
     this.category = notice.category
     this.user_id = notice.user_id
+    this.updated_at = notice.updated_at
   }
 
   // display new notice form
@@ -74,7 +75,7 @@ class Notice {
         let notices = data.map(d => new Notice(d))
         // append card nodes into board 
         notices.forEach((notice, i) => {
-          board.append(notice.displayNotice())
+          board.append(notice.getNotice())
           if (i === 0) {
             document.querySelector(`#n_${notice.id} button`).classList.remove("collapsed")
             document.querySelector(`#collapse_${notice.id}`).classList.add("show")
@@ -84,7 +85,7 @@ class Notice {
   }
 
   // display each notice node
-  displayNotice() {
+  getNotice() {
     // set icon by category
     let icon
     if (this.category === "Today's Works") {
@@ -113,6 +114,7 @@ class Notice {
             <button id="deleteBtn_${this.id}" class="off btn btn-danger btn-sm">Delete</button>
           </div>
           <div>${this.description}</div>
+          <div style="text-align: right; font-size: .75rem;">updated @ ${this.updated_at.split("T")[0]}, ${this.updated_at.split("T")[1].slice(0,8)}</div>
           <div id="edit-form-${this.id}" class="off"></div>
           <div class="comments"></div>
         </div>
@@ -206,7 +208,7 @@ class Notice {
           const editedNotice = new Notice(notice)
           displayMessage(`"${(notice.title.length < 25) ? notice.title : `${notice.title.slice(0, 25)}...`}" successfully updated!`)
           document.querySelector(`#n_${notice.id}`).remove()
-          board.prepend(editedNotice.displayNotice())
+          board.prepend(editedNotice.getNotice())
           document.querySelector(`#n_${editedNotice.id} button`).classList.remove("collapsed")
           document.querySelector(`#collapse_${editedNotice.id}`).classList.add("show")
         }

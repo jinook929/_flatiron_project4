@@ -13,6 +13,19 @@ welcome.addEventListener("click", e => {
   }
 })
 
+// profile Easter Egg
+profileLink.addEventListener("click", e => {
+  let hi = document.querySelector("#hi")
+  if(!hi) {
+    hi = document.createElement("img")
+    hi.id = "hi"
+    hi.setAttribute("src", "./images/hi.png")
+    document.body.prepend(hi)
+  } else {
+    hi.remove()
+  }
+})
+
 // howtoBox on navbarBrand
 navbarBrand.addEventListener("click", e => {
   const howtoDirections = `
@@ -32,19 +45,6 @@ navbarBrand.addEventListener("click", e => {
   })
 })
 
-// profile Easter Egg
-profileLink.addEventListener("click", e => {
-  let hi = document.querySelector("#hi")
-  if(!hi) {
-    hi = document.createElement("img")
-    hi.id = "hi"
-    hi.setAttribute("src", "./images/hi.png")
-    document.body.prepend(hi)
-  } else {
-    hi.remove()
-  }
-})
-
 // search function
 search.addEventListener("submit", e => {
   e.preventDefault()
@@ -52,23 +52,27 @@ search.addEventListener("submit", e => {
   .then(res => {
     // convert backend data to JS objects
     let notices = res.data.map(d => new Notice(d))
-    // append card nodes into board 
+    // prepare search result
+    const resultMemo = document.createElement("h2")
+    resultMemo.id = "result-memo"
     board.innerHTML = ""
-    if(notices.length === 0) {
-      const noResultMsg = document.createElement("h2")
-      noResultMsg.id = "no-result"
-      noResultMsg.innerHTML = `There is no result for "${search.children[0].value}"`
-      board.append(noResultMsg)
-    } else {
+    // append search result memo and card nodes into board 
+    if(notices.length === 0) { // when no result
+      resultMemo.innerHTML = `There is no result for "${search.children[0].value}"`
+      board.append(resultMemo)
+    } else { // when results found
+      resultMemo.innerHTML = `Results for "${search.children[0].value}"`
       notices.forEach((notice, i) => {
-        board.append(notice.displayNotice())
+        board.append(notice.getNotice())
         if (i === 0) {
           document.querySelector(`#n_${notice.id} button`).classList.remove("collapsed")
           document.querySelector(`#collapse_${notice.id}`).classList.add("show")
         }
       })
+      board.prepend(resultMemo)
     }
     search.children[0].value = ""
+    // add back button
     const backBtn = document.createElement("button")
     backBtn.id = "back-btn"
     backBtn.className = "btn btn-primary btn-lg"

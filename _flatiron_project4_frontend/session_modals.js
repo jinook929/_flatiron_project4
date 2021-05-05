@@ -120,7 +120,7 @@ function sessionSubmit(route, form, status) {
     }
   })
 }
-// 
+// display message for 5 seconds
 function displayMessage(msg) {
   message.innerHTML = msg
   setTimeout(() => {
