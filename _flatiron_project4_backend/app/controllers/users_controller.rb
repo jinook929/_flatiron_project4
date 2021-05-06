@@ -12,9 +12,9 @@ class UsersController < ApplicationController
   def create
     user = User.new(user_params)
     user.email = params[:user][:email].downcase
+    user.username = params[:user][:email].upcase.split("@")[0]
     if user.save
-      session[:user_id] = user.id
-      p session[:user_id]
+      # session[:user_id] = user.id
       render json: user
     else
       render json: {message: "Sign up failed..."}

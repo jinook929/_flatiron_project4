@@ -8,6 +8,7 @@ class Notice {
     this.description = notice.description
     this.category = notice.category
     this.user_id = notice.user_id
+    this.comments = notice.comments
     this.updated_at = notice.updated_at
   }
 
@@ -76,10 +77,41 @@ class Notice {
         // append card nodes into board 
         notices.forEach((notice, i) => {
           board.append(notice.getNotice())
+          // open first notice card
           if (i === 0) {
             document.querySelector(`#n_${notice.id} button`).classList.remove("collapsed")
             document.querySelector(`#collapse_${notice.id}`).classList.add("show")
           }
+          // add comment section
+          const commentSection = document.querySelector(`#comments-${notice.id}`)
+          const commentFormDiv = document.createElement("div")
+          const commentsOnly = document.createElement('div')
+          commentFormDiv.id = `#new-comment-div-${notice.id}`
+          commentFormDiv.innerHTML = Comment.newCommentForm(notice)
+          commentSection.append(commentFormDiv)
+          commentSection.append(commentsOnly)
+          // add new comment submit event listener
+          commentFormDiv.children[0].addEventListener('submit', e => {
+            e.preventDefault()
+            axios.post(`${url}/comments`, {
+              comment: {
+                content: e.target[0].value,
+                notice_id: notice.id,
+                user_digest: currentUser()
+              }
+            }).then(res => {
+              let comment = res.data
+              commentsOnly.prepend(Comment.displayComment(comment))
+              document.querySelector(`#new-comment-content-${notice.id}`).value = ""
+            })
+          })
+          // hide new comment form if not l
+          if(!isLoggedIn()) commentFormDiv.classList.add("off")
+          // add each comment
+          const sortedComments = notice.comments.sort((a, b) => Number.parseInt(b.updated_at.split(/[-:TZ\.]/).join("")) - Number.parseInt(a.updated_at.split(/[-:TZ\.]/).join("")))
+          sortedComments.forEach(comment => {
+            commentsOnly.append(Comment.displayComment(comment))
+          })
         })
       })
   }
@@ -113,10 +145,10 @@ class Notice {
             <button id="editBtn_${this.id}" class="off btn btn-warning btn-sm ms-auto">Edit</button>
             <button id="deleteBtn_${this.id}" class="off btn btn-danger btn-sm">Delete</button>
           </div>
-          <div>${this.description}</div>
-          <div style="text-align: right; font-size: .75rem;">updated @ ${this.updated_at.split("T")[0]}, ${this.updated_at.split("T")[1].slice(0,8)}</div>
+          <div class="lead">${this.description}</div>
+          <div style="text-align: right; margin-top:10px; font-size: .75rem;">updated @ ${this.updated_at.split("T")[0]}, ${this.updated_at.split("T")[1].slice(0,8)}</div>
           <div id="edit-form-${this.id}" class="off"></div>
-          <div class="comments"></div>
+          <div id="comments-${this.id}" class="comments"></div>
         </div>
       </div>
       `
@@ -130,6 +162,7 @@ class Notice {
           }
         })
     }
+
     return card
   }
 

@@ -268,12 +268,12 @@ h1 {
 }
 
 .category-icon {
-  font-size: 1.1rem;
+  font-size: 1.15rem;
 }
 
 .notice-title {
   position: absolute;
   font-weight: bold;
   left: 60px; 
-  font-size: 1.15rem;
+  font-size: 1.25rem;
 }

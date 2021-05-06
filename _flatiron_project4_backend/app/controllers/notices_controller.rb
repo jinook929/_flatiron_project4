@@ -1,24 +1,22 @@
 class NoticesController < ApplicationController
   def index
     notices = Notice.all.order(updated_at: :desc)
-    render json: notices, include: [:user]
+    render json: notices, include: [:user, :comments]
   end
 
-  # def show
-  #   notice = Notice.find_by(id: params[:id])
-  #   if(notice)
-  #     render json: notice
-  #   else
-  #     render json: {message: "Notice not found..."}
-  #   end
-  # end
+  def show
+    notice = Notice.find_by(id: params[:id])
+    if(notice)
+      render json: notice
+    else
+      render json: {message: "Notice not found..."}
+    end
+  end
 
   def create
     user = User.find_by(password_digest: params[:notice][:user_digest])
     notice = Notice.new(title: params[:notice][:title], description: params[:notice][:description], category: params[:notice][:category], user_id: user.id)
     if notice.save
-      session[:notice_id] = notice.id
-      p session[:notice_id]
       render json: notice
     else
       render json: {message: "Notice could not posted..."}

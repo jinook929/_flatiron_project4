@@ -1,22 +1,4 @@
-// const card = document.createElement("div")
-// card.id = `n_${notice.id}`
-// card.classList.add("accordion-item")
-// const cardBody = `
-// <h2 class="accordion-header" id="notice_${notice.id}">
-// <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_${notice.id}" aria-expanded="false" aria-controls="collapse_${notice.id}">
-//   ${icon} <span class="notice-title">${notice.title}</span>
-// </button>
-// </h2>
-// <div id="collapse_${notice.id}" class="accordion-collapse collapse" aria-labelledby="heading_${notice.id}" data-bs-parent="#board">
-//   <div class="accordion-body">
-//     <div class="d-flex gap-1 mt-3 me-3">
-//       <button id="editBtn_${notice.id}" class="off btn btn-warning btn-sm ms-auto">Edit</button>
-//       <button id="deleteBtn_${notice.id}" class="off btn btn-danger btn-sm">Delete</button>
-//     </div>
-//     <div>${notice.description}</div>
-//     <div id="edit-form-${notice.id}" class="off"></div>
-//     <div class="comments"></div>
-//   </div>
-// </div>
-// `
-// card.append(cardBody)
+<form id ="new-comment-${notice.id}" class="d-flex">
+  <textarea class="new-form-input" type="text" name="content" id="new-comment-content-${notice.id}" rows="3" required></textarea>
+  <input class="btn btn-pramary ms-auto" type="submit" value="SUBMIT">
+</form>
