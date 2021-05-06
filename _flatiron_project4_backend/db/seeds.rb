@@ -48,6 +48,50 @@ Notice.create(title: "One More Person!", description: "Yo people we need ONE mor
 sleep 1
 Notice.create(title: "Our Star~", description: "ZBF was featured by flatiron!", category: "etc", user_id: 3)
 
-Comment.create(content: "Hi there~", notice_id: 18, user_id: 4, username: "ABC")
+Comment.create(content: "Good morning~", notice_id: 1, user_id: 4, username: "ABC")
 sleep 1
-Comment.create(content: "Hey~~~", notice_id: 18, user_id: 2, username: "LURK")
+Comment.create(content: "Thank you", notice_id: 2, user_id: 2, username: "LURK")
+sleep 1
+Comment.create(content: "No problem!", notice_id: 2, user_id: 3, username: "EVE")
+sleep 1
+Comment.create(content: "hop in guys~", notice_id: 3, user_id: 2, username: "LURK")
+sleep 1
+Comment.create(content: "i'll miss today's session cuz my kid has schedule and i have to pick him up", notice_id: 5, user_id: 4, username: "ABC")
+sleep 1
+Comment.create(content: "HAPPY HUMP DAY~", notice_id: 6, user_id: 4, username: "ABC")
+sleep 1
+Comment.create(content: "agreed!", notice_id: 8, user_id: 2, username: "LURK")
+sleep 1
+Comment.create(content: "JS is hard~~~", notice_id: 8, user_id: 3, username: "EVE")
+sleep 1
+Comment.create(content: "cheer up, y'all!", notice_id: 8, user_id: 1, username: "ANN")
+sleep 1
+Comment.create(content: "I need more time for JS...", notice_id: 8, user_id: 4, username: "ABC")
+sleep 1
+Comment.create(content: "Ohh man, I love it!!", notice_id: 11, user_id: 3, username: "EVE")
+sleep 1
+Comment.create(content: "RIGHT???", notice_id: 11, user_id: 2, username: "LURK")
+sleep 1
+Comment.create(content: "It's so organized", notice_id: 11, user_id: 3, username: "EVE")
+sleep 1
+Comment.create(content: "YOU MAKE ME WANT TO BE A BETTER MAN.", notice_id: 11, user_id: 4, username: "ABC")
+sleep 1
+Comment.create(content: "WHOA, it’s cool!!", notice_id: 11, user_id: 1, username: "ANN")
+sleep 1
+Comment.create(content: "Thanks", notice_id: 12, user_id: 4, username: "ABC")
+sleep 1
+Comment.create(content: "TGIF~", notice_id: 13, user_id: 2, username: "LURK")
+sleep 1
+Comment.create(content: "you're the best^^", notice_id: 15, user_id: 3, username: "EVE")
+sleep 1
+Comment.create(content: "come on, people~", notice_id: 17, user_id: 3, username: "EVE")
+sleep 1
+Comment.create(content: "i'm in", notice_id: 17, user_id: 4, username: "ABC")
+sleep 1
+Comment.create(content: "WOW!", notice_id: 18, user_id: 4, username: "ABC")
+sleep 1
+Comment.create(content: "congrats, ZBF~", notice_id: 18, user_id: 2, username: "LURK")
+sleep 1
+Comment.create(content: "we’re famous!!!", notice_id: 18, user_id: 1, username: "ANN")
+sleep 1
+Comment.create(content: "absolutely^^", notice_id: 18, user_id: 3, username: "EVE")

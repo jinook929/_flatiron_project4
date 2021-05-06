@@ -1,11 +1,10 @@
 class CommentsController < ApplicationController
-  def index
-    comments = Comment.all.order(updated_at: :desc)
-    render json: comments, include: [:user, :notice]
-  end
+  # def index
+  #   comments = Comment.all.order(updated_at: :desc)
+  #   render json: comments, include: [:user, :notice]
+  # end
 
   def create
-    # binding.pry
     user = User.find_by(password_digest: params[:comment][:user_digest])
     comment = Comment.new(content: params[:comment][:content], notice_id: params[:comment][:notice_id], user_id: user.id, username: user.username)
     if comment.save
