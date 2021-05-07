@@ -15,7 +15,8 @@ class NoticesController < ApplicationController
 
   def create
     user = User.find_by(password_digest: params[:notice][:user_digest])
-    notice = Notice.new(title: params[:notice][:title], description: params[:notice][:description], category: params[:notice][:category], user_id: user.id)
+    notice = Notice.new(notice_params)
+    notice.user_id = user.id
     if notice.save
       render json: notice
     else
@@ -49,7 +50,7 @@ class NoticesController < ApplicationController
     render json: notices.uniq
   end
 
-  # def notice_params
-  #   params.require(:notice).permit(:title, :description, :category, :user_digest)
-  # end
+  def notice_params
+    params.require(:notice).permit(:title, :description, :category)
+  end
 end

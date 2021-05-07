@@ -10,6 +10,7 @@ User.create(email: "ann@email.com", password: "123", username: "ANN")
 User.create(email: "lurk@email.com", password: "123", username: "LURK")
 User.create(email: "eve@email.com", password: "123", username: "EVE")
 User.create(email: "abc@email.com", password: "123", username: "ABC")
+User.create(email: "zbf@email.com", password: "123", username: "ZBF")
 
 sleep 1
 Notice.create(title: "20210426", description: "Good morning!! Welcome to week 3 of JS! The schedule for this week is: Monday - Advanced Function Usage (finish), Tuesday - Object-Orientation in JavaScript (All), Wednesday - Object-Oriented JavaScript Inheritance (All), Thursday - Prototypal Inheritance (All), Friday - OPTIONAL Additional Practice. At 1 PM EST today we will be continuing the live build and adding full CRUD functionality. This session will be recorded and will turn into an OOH if there is time left over! Check out these ES6 challenges for some extra practice! Keep up the good work, everyone!!!!", category: "Today's Works", user_id: 1)
@@ -95,3 +96,5 @@ sleep 1
 Comment.create(content: "we’re famous!!!", notice_id: 18, user_id: 1, username: "ANN")
 sleep 1
 Comment.create(content: "absolutely^^", notice_id: 18, user_id: 3, username: "EVE")
+sleep 1
+Comment.create(content: "Thank you~~~ haha", notice_id: 18, user_id: 5, username: "ZBF")

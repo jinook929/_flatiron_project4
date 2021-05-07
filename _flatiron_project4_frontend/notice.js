@@ -54,12 +54,19 @@ class Notice {
         })
       }).then(res => res.json())
         .then(data => {
+          const notice = new Notice(data)
+          // display message and hide new form
           displayMessage(`"${(data.title.length < 25) ? data.title : `${data.title.slice(0, 25)}...`}" created successfully`)
           newPostForm.children[2].value = ""
           newPostForm.children[6].value = ""
           newPostForm.children[9].value = "etc"
           newPostForm.classList.add("off")
-          Notice.getNotices()
+          // display newly create notice with changed foucus on cards
+          board.firstChild.childNodes[1].childNodes[1].classList.toggle("collapsed")
+          board.firstChild.childNodes[3].classList.toggle("show")
+          board.prepend(notice.getNotice())
+          document.querySelector(`#n_${notice.id} button`).classList.remove("collapsed")
+          document.querySelector(`#collapse_${notice.id}`).classList.add("show")
         })
     })
   }
@@ -105,7 +112,7 @@ class Notice {
               document.querySelector(`#new-comment-content-${notice.id}`).value = ""
             })
           })
-          // hide new comment form if not l
+          // hide new comment form if not logged in
           if(!isLoggedIn()) commentFormDiv.classList.add("off")
           // add each comment
           const sortedComments = notice.comments.sort((a, b) => Number.parseInt(b.updated_at.split(/[-:TZ\.]/).join("")) - Number.parseInt(a.updated_at.split(/[-:TZ\.]/).join("")))

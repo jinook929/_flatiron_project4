@@ -9,6 +9,13 @@ body {
   color: red;
 }
 
+#hi {
+  width: 100px;
+  position: fixed;
+  top: 60px;
+  left: 30px;
+}
+
 /* nav related */
 .off {
   display: none;
@@ -19,23 +26,16 @@ body {
   background-color: #ffe600;
 }
 
-#hi {
-  width: 100px;
-  position: fixed;
-  top: 60px;
-  left: 30px;
-}
-
-#back-btn {
-  width: 100%;
-}
-
 #result-memo {
   text-align: center;
   font-family: 'Gloria Hallelujah', cursive;
   font-size: 2.5em;
   padding-top: 20px;
   padding-bottom: 30px;
+}
+
+#back-btn {
+  width: 100%;
 }
 
 /* page title */
@@ -108,6 +108,29 @@ h1 {
   height: 50px; 
   border: 1px solid white; 
   border-radius: 5px;
+}
+
+/* board */
+.category-keys {
+  text-align: center;
+  font-size: .95rem;
+  margin-top: 30px;
+  margin-bottom: 15px;
+}
+
+#board {
+  margin: 0 auto 50px;
+}
+
+.category-icon {
+  font-size: 1.15rem;
+}
+
+.notice-title {
+  position: absolute;
+  font-weight: bold;
+  left: 60px; 
+  font-size: 1.25rem;
 }
 
 /* edit post form */
@@ -253,27 +276,4 @@ h1 {
 .form-input input:valid + label span {
   color: lightyellow;
   transform: translateY(-30px);
-}
-
-/* board */
-.category-keys {
-  text-align: center;
-  font-size: .95rem;
-  margin-top: 30px;
-  margin-bottom: 15px;
-}
-
-#board {
-  margin: 0 auto 50px;
-}
-
-.category-icon {
-  font-size: 1.15rem;
-}
-
-.notice-title {
-  position: absolute;
-  font-weight: bold;
-  left: 60px; 
-  font-size: 1.25rem;
 }
