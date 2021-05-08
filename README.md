@@ -70,6 +70,7 @@ by Jinook Jung
 
 ``` ruby
   t.string :email
+  t.string "username"
   t.string :password_digest
   ...
 ```
