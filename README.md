@@ -19,7 +19,7 @@ by Jinook Jung
 
 1. You can either sign up for your own account or use the existing accounts to log in (5 users are pre-set: `ann@email.com`, `lurk@email.com`, `eve@email.com`, `abc@email.com`, `zbf@email.com` [password for everyone is `123`]).
 2. Before logging in, user can see all the notices/comments.
-3. Each notice has its category (please refer to the keys).
+3. Each notice has its category (please refer to category keys above notice display area).
 4. After logging in, you can create new notices/comments, and edit or delete your own notices.
 5. Keyword search is available for any user (before/after logging in) via the search box on the navbar.
 6. There are a couple of Easter Eggs, so try to find them~^^√
