@@ -6,6 +6,8 @@ by Jinook Jung
 
 ## How To Set Up the App
 
+0. This app works best with Ruby 2.6.1 & Rails 6.1.3.1.
+
 1. Visit my [Github repository](https://github.com/jinook929/_flatiron_project4) and clone the code to your local directory:
 
  `git clone https://github.com/jinook929/_flatiron_project4.git`.
@@ -122,6 +124,7 @@ by Jinook Jung
 
 ``` ruby
   belongs_to :notice
+  belongs_to :user
 
   validates_presence_of :content, :user_id, :notice_id
 ```
