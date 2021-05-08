@@ -70,7 +70,7 @@ by Jinook Jung
 
 ``` ruby
   t.string :email
-  t.string "username"
+  t.string :username
   t.string :password_digest
   ...
 ```
@@ -90,8 +90,9 @@ by Jinook Jung
 
 ``` ruby
   t.string :content
-  t.integer :user_id
   t.integer :notice_id
+  t.integer :user_id
+  t.string :username
   ...
 ```
 
