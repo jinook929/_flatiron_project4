@@ -8,12 +8,12 @@ by Jinook Jung
 
 1. Visit my [Github repository](https://github.com/jinook929/_flatiron_project4) and clone the code to your local directory:
 
- `git clone https://github.com/jinook929/_flatiron_project4.git`
+ `git clone https://github.com/jinook929/_flatiron_project4.git`.
 
 2. Enter into the *_flatiron_project4/_flatiron_project4_backend* folder: `cd _flatiron_project4/_flatiron_project4_backend`.
 3. Execute `bundle install` and run `rails s` in terminal.
-4. Then, change directory to *_flatiron_project4/_flatiron_project4_frontend* folder: `cd ..` & `cd _flatiron_project4/_flatiron_project4_frontend`.
-5. Open the `index.html` in your browser (*please avoid using live server*).
+4. In a new terminal, move to the directory, *_flatiron_project4/_flatiron_project4_frontend* folder: `cd _flatiron_project4/_flatiron_project4_frontend`.
+5. Then, open the `index.html` in your browser (*please avoid using live server*).
 
 ## How To Use the App
 
