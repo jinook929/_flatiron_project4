@@ -17,7 +17,7 @@ by Jinook Jung
 
 ## How To Use the App
 
-1. You can either sign up for your own account or use the existing accounts to log in (4 users are pre-set: `ann@email.com`, `lurk@email.com`, `eve@email.com`, `abc@email.com` [password for everyone is `123`]).
+1. You can either sign up for your own account or use the existing accounts to log in (4 users are pre-set: `ann@email.com`, `lurk@email.com`, `eve@email.com`, `abc@email.com`, `zbf@email.com` [password for everyone is `123`]).
 2. Before logging in, user can see all the notices.
 3. Each notice has its category (please refer to the keys).
 4. After logging in, you can create new notices/comments, and edit or delete your own notices.
