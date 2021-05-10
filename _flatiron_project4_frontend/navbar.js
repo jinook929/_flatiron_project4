@@ -1,5 +1,6 @@
 const navbarBrand = document.querySelector(".navbar-brand")
 const profileLink = document.querySelector("#profile")
+const myNoticeLink = document.querySelector("#personal-notice")
 const howtoBox = document.querySelector("#howto-box")
 const search = document.querySelector("#search")
 const welcome = document.querySelector("#welcome")
@@ -24,6 +25,27 @@ profileLink.addEventListener("click", e => {
   } else {
     hi.remove()
   }
+})
+
+// display owned notices
+myNoticeLink.addEventListener("click", e => {
+  fetch(`${url}/notices`)
+  .then(res => res.json())
+  .then(data => {
+    const notices = data.filter(el => el.user.password_digest === currentUser()).map(notice => new Notice(notice))
+    board.innerHTML = ""
+    notices.forEach(el => {
+      board.append(el.getNotice())
+    })
+    const backBtn = document.createElement("button")
+    backBtn.id = "back-btn"
+    backBtn.className = "btn btn-primary btn-lg"
+    backBtn.innerHTML = "Back to Main"
+    backBtn.addEventListener("click", e => {
+      Notice.getNotices()
+    })
+    board.append(backBtn)
+  })
 })
 
 // howtoBox on navbarBrand

@@ -88,6 +88,7 @@ function modalToggle(message, username = "USER") {
   signupLink.classList.toggle("off")
   loginLink.classList.toggle("off")
   profileLink.classList.toggle("off")
+  myNoticeLink.classList.toggle("off")
   logoutLink.classList.toggle("off")
 }
 // submit form info to backend and keep login status
